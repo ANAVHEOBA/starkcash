@@ -1,0 +1,1 @@
+{"version":1,"contracts":[{"id":"9qrsudnd41g6c","package_name":"starkcash","contract_name":"GhostPool","module_path":"starkcash::ghost_pool::GhostPool","artifacts":{"sierra":"starkcash_GhostPool.contract_class.json","casm":"starkcash_GhostPool.compiled_contract_class.json"}}]}

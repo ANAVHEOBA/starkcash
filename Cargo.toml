@@ -3,6 +3,9 @@ name = "starkcash"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+members = [".", "zkp"]
+
 [[bin]]
 name = "starkcash"
 path = "src/main.rs"
@@ -16,6 +19,13 @@ path = "src/lib.rs"
 rand = "0.8"
 thiserror = "1.0"
 serde = { version = "1.0", features = ["derive"] }
+num-bigint = "0.4"
+num-traits = "0.2"
+num-integer = "0.1"
+light-poseidon = "0.2.0"
+ark-bn254 = "0.4.0"
+ark-ff = "0.4.0"
+garaga = { git = "https://github.com/Keep-Starknet-Strange/garaga.git", branch = "main" }
 
 [dev-dependencies]
 # Testing dependencies
@@ -24,3 +34,7 @@ tokio = { version = "1.0", features = ["full"] }
 [[test]]
 name = "cryptography_integration"
 path = "tests/integration/cryptography/mod.rs"
+
+[[test]]
+name = "merkle_tree_integration"
+path = "tests/integration/merkle_tree/mod.rs"
