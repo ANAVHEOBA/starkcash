@@ -1,4 +1,4 @@
-use starkcash::ghost_pool::{GhostPool, IGhostPoolDispatcher, IGhostPoolDispatcherTrait, Proof, G1Point, G2Point};
+use starkcash::ghost_pool::{GhostPool, IGhostPoolDispatcher, IGhostPoolDispatcherTrait, Groth16Proof, G1Point, G2Point};
 use starknet::{ContractAddress, contract_address_const};
 use core::traits::Into;
 use core::hash::HashStateTrait;
