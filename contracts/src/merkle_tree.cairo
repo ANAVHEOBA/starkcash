@@ -1,5 +1,4 @@
-use core::poseidon::PoseidonTrait;
-use core::hash::HashStateTrait;
+use starkcash::poseidon::poseidon_hash_2;
 
 const LEVELS: usize = 20;
 const ROOT_HISTORY_SIZE: usize = 30;
@@ -25,12 +24,7 @@ fn get_zero(level: usize) -> u256 {
 }
 
 fn hash_u256_left_right(left: u256, right: u256) -> u256 {
-    let mut state = core::poseidon::PoseidonTrait::new();
-    state = state.update(left.low.into());
-    state = state.update(left.high.into());
-    state = state.update(right.low.into());
-    state = state.update(right.high.into());
-    state.finalize().into()
+    poseidon_hash_2(left, right)
 }
 
 #[starknet::component]

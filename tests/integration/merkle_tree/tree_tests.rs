@@ -1,7 +1,7 @@
 //! Integration tests for Incremental Merkle Tree
 
 use starkcash::module::merkle_tree::{IncrementalMerkleTree, LEVELS, ROOT_HISTORY_SIZE};
-use starkcash::module::cryptography::mimc7_hash;
+use starkcash::module::cryptography::poseidon_hash;
 
 #[test]
 fn test_tree_initialization() {
@@ -126,7 +126,7 @@ fn test_merkle_proof_verification() {
             right = current_hash;
         }
         
-        current_hash = mimc7_hash(&left, &right);
+        current_hash = poseidon_hash(&left, &right);
     }
     
     assert_eq!(current_hash, proof.root, "Manual proof verification failed");

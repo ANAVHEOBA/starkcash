@@ -1,7 +1,5 @@
-use starkcash::ghost_pool::{GhostPool, IGhostPoolDispatcher, IGhostPoolDispatcherTrait, Groth16Proof, G1Point, G2Point};
+use starkcash::poseidon::poseidon_hash_2;
 use starknet::{ContractAddress, contract_address_const};
-use core::traits::Into;
-use core::hash::HashStateTrait;
 
 // Mock ERC20 for testing
 #[starknet::interface]
@@ -25,15 +23,29 @@ fn test_merkle_tree_root() {
     let mut i: u32 = 0;
     loop {
         if i >= 20_u32 { break; }
-        let mut state = core::poseidon::PoseidonTrait::new();
-        state = state.update(current.low.into());
-        state = state.update(current.high.into());
-        state = state.update(current.low.into());
-        state = state.update(current.high.into());
-        current = state.finalize().into();
+        current = poseidon_hash_2(current, current);
         i += 1;
     };
     
     // Check if the empty root is what we expect
     assert(current != 0, 'Root should not be zero');
+}
+
+#[test]
+fn test_poseidon_hash_consistency() {
+    // Test that our Poseidon implementation is consistent
+    // Note: This uses Starknet's native Poseidon, not BN254-compatible Poseidon
+    // For production ZK proofs, we'll need to integrate proper BN254 Poseidon
+    let h1 = poseidon_hash_2(1, 2);
+    let h2 = poseidon_hash_2(1, 2);
+    
+    // Same inputs should produce same output
+    assert(h1 == h2, 'Poseidon not deterministic');
+    
+    // Different inputs should produce different output
+    let h3 = poseidon_hash_2(2, 3);
+    assert(h1 != h3, 'Poseidon collision');
+    
+    // Hash should not be zero
+    assert(h1 != 0, 'Poseidon hash is zero');
 }

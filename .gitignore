@@ -1,1 +1,22 @@
 /target
+
+# Ignore all markdown files except README.md
+*.md
+!README.md
+!**/README.md
+
+# VS Code
+.vscode/
+
+# Node modules
+node_modules/
+
+# Build artifacts
+circuits/build/*.zkey
+circuits/build/*.ptau
+circuits/build/*.r1cs
+circuits/build/*.sym
+circuits/build/withdraw_js/
+
+# Contract build artifacts
+contracts/target/

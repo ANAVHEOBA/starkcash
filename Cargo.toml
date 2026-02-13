@@ -25,7 +25,6 @@ num-integer = "0.1"
 light-poseidon = "0.2.0"
 ark-bn254 = "0.4.0"
 ark-ff = "0.4.0"
-garaga = { git = "https://github.com/Keep-Starknet-Strange/garaga.git", branch = "main" }
 
 [dev-dependencies]
 # Testing dependencies
