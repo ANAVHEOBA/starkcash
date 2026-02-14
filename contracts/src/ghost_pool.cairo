@@ -1,5 +1,6 @@
 use starknet::ContractAddress;
 
+// GhostProtocol - Privacy-preserving transactions on Starknet
 #[starknet::interface]
 pub trait IERC20<TContractState> {
     fn transfer(ref self: TContractState, recipient: ContractAddress, amount: u256) -> bool;
@@ -58,11 +59,15 @@ mod GhostPool {
 
     impl MerkleTreeInternalImpl = MerkleTreeComponent::InternalImpl<ContractState>;
 
+    // Contract version
+    const VERSION: felt252 = 'v1.0.0';
+
     #[storage]
     struct Storage {
         token: IERC20Dispatcher,
         denomination: u256,
         nullifiers: Map<u256, bool>,
+        contract_version: felt252,
         #[substorage(v0)]
         merkle_tree: MerkleTreeComponent::Storage,
     }
@@ -94,6 +99,7 @@ mod GhostPool {
     fn constructor(ref self: ContractState, token_address: ContractAddress, denomination: u256) {
         self.token.write(IERC20Dispatcher { contract_address: token_address });
         self.denomination.write(denomination);
+        self.contract_version.write(VERSION);
         self.merkle_tree.initialize();
     }
 
